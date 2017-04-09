@@ -20,8 +20,24 @@
 			
 			$(function() {
 				
-				//구매정보 처리
-				$(".ct_list_pop td:nth-child(1)")
+				//구매정보 확인
+				$(".ct_list_pop td:nth-child(1) span").on("click", function() {
+					alert($(this).attr('tranNo') + " :: tranNo");
+					self.location="/purchase/getPurchase?tranNo="+$(this).attr('tranNo');					
+				});
+				
+				//고객정보 확인
+				$(".ct_list_pop td:nth-child(3) span").on("click", function() {
+					alert($(this).attr('userId') + " :: userId");
+					self.location="/user/getUser?userId="+$(this).attr('userId');					
+				});
+				
+				$(".ct_list_pop td:nth-child(11) span").on("click", function() {
+					alert($(this).attr('tranNo') + " :: userId" + $(this).attr('tranCode'));
+					self.location="/purchase/updateTranCode?tranNo="+$(this).attr('tranNo') + "&tranCode=" + $(this).attr('tranCode');					
+				});
+				
+				
 				
 			})
 	
@@ -76,13 +92,18 @@
 					<c:set var="i" value="${ i+1 }" />
 					<tr class="ct_list_pop">
 						<td align="center">
-							<span >
-								<a href="/purchase/getPurchase?tranNo=${purchase.tranNo}">${ i }</a>
+							<span tranNo="${purchase.tranNo}">
+							<%-- 	<a href="/purchase/getPurchase?tranNo=${purchase.tranNo}"></a> --%>
+							${ i }
 							</span>						
 						</td>						
-						<td></td>
-						<td align="left"><a href="/user/getUser?userId=${purchase.buyer.userId }">${purchase.buyer.userId}</a>
-						</td>
+						<td></td>							
+							<td align="left">
+								<span userId="${purchase.buyer.userId }">
+									<%-- <a href="/user/getUser?userId=${purchase.buyer.userId }"></a> --%>
+										${purchase.buyer.userId }
+								</span>
+							</td>
 						<td></td>
 						<td align="left">${purchase.receiverName}</td>
 						<td></td>
@@ -97,10 +118,12 @@
 						</td>
 						<td></td>
 						<td align="left">
-							<c:if test="${purchase.tranCode.trim()=='2' }"	>
-							<%-- 	<a href="/updateTranCode.do?tranNo=${purchase.tranNo}&tranCode=${purchase.tranCode}">물건도착</a><br/> --%>
-								<a href="/purchase/updateTranCode?tranNo=${purchase.tranNo}&tranCode=${purchase.tranCode}">물건도착</a><br/>
-							</c:if>
+							<span tranNo="${purchase.tranNo}" tranCode="${purchase.tranCode}">
+								<c:if test="${purchase.tranCode.trim()=='2' }"	>
+									<%-- <a href="/purchase/updateTranCode?tranNo=${purchase.tranNo}&tranCode=${purchase.tranCode}">물건도착</a><br/> --%>
+									물건도착<br/>
+								</c:if>
+							</span>
 						</td>
 					</tr>
 					

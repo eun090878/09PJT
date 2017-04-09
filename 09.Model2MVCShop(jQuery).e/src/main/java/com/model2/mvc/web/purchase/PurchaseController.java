@@ -76,18 +76,16 @@ public class PurchaseController {
 	
 //	@RequestMapping("/addPurchase.do")
 	@RequestMapping( value="addPurchase", method=RequestMethod.POST )
-	public String addPurchase( @RequestParam("prodNo") int prodNo, 
-																	@RequestParam("buyerId") String buyerId, 
-																	@ModelAttribute("purchase") Purchase purchase) throws Exception {
+	public String addPurchase(@ModelAttribute("purchase") Purchase purchase) throws Exception {
 		
 		System.out.println("/addPurchase");
 				
-		User user = userService.getUser(buyerId);
-		Product product = productService.getProduct(prodNo);
+//		User user = userService.getUser(buyerId);
+//		Product product = productService.getProduct(prodNo);
 		
-		purchase.setBuyer(user);
-		purchase.setPurchaseProd(product);
-		purchaseService.addPurchase(purchase);
+//		purchase.setBuyer(user);
+//		purchase.setPurchaseProd(product);
+			purchaseService.addPurchase(purchase);
 				
 		return "forward:/purchase/addPurchase.jsp";
 	}
